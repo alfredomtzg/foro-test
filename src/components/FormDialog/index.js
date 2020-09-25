@@ -22,7 +22,7 @@ export default function FormDialog(props) {
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To be able to make comments and start interacting with your questions, please register.
+            To be able to make comments and start interacting with your questions, please register :D .
           </DialogContentText>
           <Login />
           <Form />
