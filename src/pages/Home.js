@@ -1,38 +1,56 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-// bring Form
-import FormDialog from '../components/FormDialog'
-// import CustomizedSnackbars
-import CustomizedSnackbars from '../components/SeccessAlarm'
-// styles
-import { useStyles } from '../Style'
-// button
-import Button from '@material-ui/core/Button'
+import React, { useContext, useEffect } from 'react';
+// import Axios
+import axios from 'axios';
+// bring Loading
+import Loading from '../components/Loading';
+// bring Card
+import Cards from '../components/Card'
 // import Context
 import { Context } from '../utils/Contex';
 
 
 
 export default function Home() {
-  const classes = useStyles();
   const {
-    user
-  } = React.useContext(Context);
+    categories,
+    setCategories,
+  } = useContext(Context);
 
+  // Require post 
+  const urlCategories = "https://testing-api-foro.herokuapp.com/api/categories"
 
-  return (
-    <div className={classes.root}>
-      <h1>Bienvenidos éste es Home</h1>
-      {user!==undefined
-      ? <Link to={"/posts"}>
-          <Button variant="contained" color="default">
-            Go to Post
-          </Button> 
-        </Link>
-      : null
-      }
-      <FormDialog />
-      <CustomizedSnackbars />
-    </div>
-  );
+  const bringCategories = async () => {
+    await axios.get(urlCategories)
+      .then(res => {
+        setCategories(res.data)
+        console.log(res);
+      })
+      .catch(err => { console.log(`Algo paso, aquí te lo muestro: ${err}`) })
+  }
+
+  // bring data Categories
+  useEffect(() => {
+    bringCategories();
+  }, []);
+
+  // show loadign 
+  if (categories.length === 0) {
+    return (
+      <>
+        <h1>Bienvenidos a Foro App</h1>
+        <Loading />
+      </>
+    );
+  } else {
+    // show Categories
+    return (
+      <>
+        {categories.map((categorie, _id) => {
+          return (
+            <Cards key={categorie._id} data={categorie}/>
+          )
+        })}
+      </>
+    )
+  }
 }

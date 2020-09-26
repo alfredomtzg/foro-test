@@ -9,14 +9,15 @@ export const ContextProvider = ({ children }) => {
   // Alert
   const [open, setOpen] = useState(false)
   const [openAlert, setOpenAlert] = useState(false);
+  const [openAlertWarning, setOpenAlertWarning] = useState(false);
   const handleClickAlert = () => { setOpenAlert(true); };
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       setOpenFormDialog(false)
       return;
     }
-
     setOpenAlert(false);
+    setOpenAlertWarning(false);
   };
   // Login Values
   const [valuesLogin, setValuesLogin] = useState({
@@ -35,24 +36,26 @@ export const ContextProvider = ({ children }) => {
   const createUserWhitFromLogin = async () => {
     await axios.post(urlLogin, valuesLogin)
       .then(res => {
-        setUser({
-          token: res.data.token,
-				});
-        console.log(res.data.status)
+        setUser(res.data);
+        console.log(user)
+        handleClickAlert();
+        setValuesLogin({
+          email: "",
+          password: "",
+        })
       })
-      .catch(err => { console.log(`Algo paso, aquí te lo muestro: ${err}`) })
+      .catch(err => { 
+        console.log(`Algo paso, aquí te lo muestro: ${err}`);
+        setOpenAlertWarning(true)
+      })
   }
 
   const handleSubmitLogin = (event) => {
     event.preventDefault();
-    handleClickAlert();
     setOpenFormDialog(false)
     console.log('Ahí van los datos del Login');
     createUserWhitFromLogin()
-    setValuesLogin({
-      email: "",
-      password: "",
-    })
+    
   }
 
   // Form Register
@@ -60,8 +63,7 @@ export const ContextProvider = ({ children }) => {
     name: "",
     username: "",
     email: "",
-    password: "",
-    token:"",
+    password: ""
   });
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
@@ -74,22 +76,27 @@ export const ContextProvider = ({ children }) => {
   const createUserWhitFormSignUP = async () => {
     await axios.post(urlSignUp, values)
       .then(res => {
-        setUser({
-					token: res.data.token,
-				});
-        console.log(res)
+        setUser(res.data);
+        console.log(res);
+        setValues({
+          name: "",
+          username: "",
+          email: "",
+          password: ""
+        })
       })
       
-      .catch(err => { console.log(`Algo paso, aquí te lo muestro: ${err}`) })
+      .catch(err => { 
+        console.log(`Algo paso, aquí te lo muestro: ${err}`);
+        setOpenAlertWarning(true)
+      })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleClickAlert();
     console.log(`'Ahí van los datos del formulario: ${values.name}'`);
     createUserWhitFormSignUP();
     setOpenFormDialog(false);
-
   }
   // FormDialog
   const [openFormDialog, setOpenFormDialog] = React.useState(false);
@@ -101,6 +108,9 @@ export const ContextProvider = ({ children }) => {
   const handleCloseFormDialog = () => {
     setOpenFormDialog(false)
   };
+  // Home
+  const [categories, setCategories] = useState("");
+
 
   // return Value
   return (
@@ -109,6 +119,8 @@ export const ContextProvider = ({ children }) => {
       setOpen,
       openAlert,
       setOpenAlert,
+      openAlertWarning, 
+      setOpenAlertWarning,
       handleCloseAlert,
       handleClickAlert,
       values,
@@ -124,7 +136,9 @@ export const ContextProvider = ({ children }) => {
       handleChangeLogin,
       handleSubmitLogin,
       user, 
-      setUser
+      setUser,
+      categories, 
+      setCategories
     }}>
       {children}
     </Context.Provider>

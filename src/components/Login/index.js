@@ -19,12 +19,12 @@ import MailIcon from '@material-ui/icons/Mail';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
   },
   rootp: {
     '& > *': {
-      margin: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
   },
 }));
@@ -50,18 +50,17 @@ export default function Login() {
         <TextField
           required
           fullWidth
-          id="email"
           label="Email"
           variant="outlined"
           color="primary"
           name="email"
+          autoComplete="current-email"
           value={valuesLogin.email}
           onChange={handleChangeLogin}
         />
         <TextField
           required
           fullWidth
-          id="password"
           label="Password"
           type="password"
           variant="outlined"

@@ -14,9 +14,6 @@ import { Context } from '../../utils/Contex';
 import {useStyles} from '../../Style/'
 
 
-
-
-
 export default function TopNavBar() {
   const classes = useStyles();
   // Context
@@ -30,9 +27,8 @@ export default function TopNavBar() {
     <div className={classes.root}>
       <AppBar position="static" color="secondary">
         <Toolbar>
-          
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <Link to={"/"}>
+            <Link to={"/"} className={classes.link}>
               <SportsEsportsIcon  />
             </Link>
           </IconButton>
@@ -41,14 +37,18 @@ export default function TopNavBar() {
           </Typography>
           {user !== undefined 
             ? <>
-                <AccountCircleIcon /> Hola {user.name}
-                <Button color="inherit" onClick={()=>setUser(undefined)}>
-                  Log-uot 
-                </Button>
+                <AccountCircleIcon /> Hola {user.username}
+                <Link to={"/"} className={classes.link}>
+                  <Button color="inherit" onClick={()=>setUser(undefined)}>
+                    Log-uot 
+                  </Button>
+                </Link>
               </>
-            : <Button color="inherit" onClick={handleClickOpenFormDialog}>
-            Login
-          </Button>
+            : 
+                <Button color="inherit" onClick={handleClickOpenFormDialog}>
+                  Login
+                </Button>
+              
           }
           
         </Toolbar>
