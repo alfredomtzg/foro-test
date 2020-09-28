@@ -23,7 +23,7 @@ export const ContextProvider = ({ children }) => {
   const [valuesLogin, setValuesLogin] = useState({
     email: "",
     password: "",
-    token: ""
+    
   })
   const handleChangeLogin = (event) => {
     setValuesLogin({ ...valuesLogin, [event.target.name]: event.target.value })
@@ -37,7 +37,7 @@ export const ContextProvider = ({ children }) => {
     await axios.post(urlLogin, valuesLogin)
       .then(res => {
         setUser(res.data);
-        console.log(user)
+        console.log(res)
         handleClickAlert();
         setValuesLogin({
           email: "",
@@ -68,10 +68,9 @@ export const ContextProvider = ({ children }) => {
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
-  // send datos
+  // send data whit Axios Post
   const urlSignUp = "https://testing-api-foro.herokuapp.com/api/auth/signup"
 
-  // Ejemplo implementando el metodo axios:
   const [user, setUser] = useState(undefined)
   const createUserWhitFormSignUP = async () => {
     await axios.post(urlSignUp, values)
@@ -108,9 +107,34 @@ export const ContextProvider = ({ children }) => {
   const handleCloseFormDialog = () => {
     setOpenFormDialog(false)
   };
+
   // Home
   const [categories, setCategories] = useState("");
 
+  // State CreateNewPost
+  const [valuesCreatePost, setValuesCreatePost] = useState({
+    title:"",
+    content:""})
+  const [openCreatePost, setOpenCreatePost] = useState(false);
+    // Open or Close Dialog Form
+    const handleClickOpenCreatePost = () => {
+      setOpenCreatePost(true);
+    };
+    const handleCloseCreatePost = () => {
+      setOpenCreatePost(false);
+    };
+
+// Page Post
+const [posts, setPosts] = useState("");
+const urlPost = "https://testing-api-foro.herokuapp.com/api/posts"
+const bringPost = async () => {
+  await axios.get(urlPost)
+    .then(res => {
+      setPosts(res.data)
+      console.log(res);
+    })
+    .catch(err => { console.log(`Algo paso, aquí te lo muestro: ${err}`) })
+}
 
   // return Value
   return (
@@ -138,7 +162,16 @@ export const ContextProvider = ({ children }) => {
       user, 
       setUser,
       categories, 
-      setCategories
+      setCategories,
+      valuesCreatePost, 
+      setValuesCreatePost,
+      openCreatePost, 
+      setOpenCreatePost,
+      handleCloseCreatePost,
+      handleClickOpenCreatePost,
+      posts, 
+      setPosts,
+      bringPost
     }}>
       {children}
     </Context.Provider>

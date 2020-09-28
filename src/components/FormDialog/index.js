@@ -10,25 +10,15 @@ import Login from '../Login/index'
 // value de context
 import { Context } from '../../utils/Contex';
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-
-    setOpen(false)
-
-  };
+export default function FormDialog(props) {
+  const {
+    openFormDialog,
+    handleCloseFormDialog,
+  } = useContext(Context);
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Aqui tiene que ir el login
-      </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={openFormDialog} onClose={handleCloseFormDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
         <DialogContent>
           <DialogContentText>

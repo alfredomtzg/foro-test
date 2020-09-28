@@ -1,22 +1,20 @@
-import React, { useEffect,useState } from 'react'
-// import Axios
-import axios from 'axios';
+import React, { useEffect, useContext } from 'react'
 import Loading from '../components/Loading';
+import CreatePost from '../components/CreatePost'
 import CardPost from '../components/CardPost';
+import Button from '@material-ui/core/Button'
+import { Context } from '../utils/Contex';
 
 export default function Post() {
-  const [posts, setPosts] = useState("");
-  const urlLogin = "https://testing-api-foro.herokuapp.com/api/posts"
+  const {
+    handleClickOpenCreatePost,
+    posts, 
+    user,
+    bringPost
+  } = useContext(Context);
+
 
   // Require post 
-  const bringPost = async () => {
-    await axios.get(urlLogin)
-      .then(res => {
-        setPosts(res.data)
-        console.log(res);
-      })
-      .catch(err => { console.log(`Algo paso, aquí te lo muestro: ${err}`) })
-  }
 
   useEffect(() => {
     bringPost()
@@ -34,6 +32,17 @@ export default function Post() {
           <CardPost key={post._id} data={post}/>
         )
       })}
+      {
+        user !== undefined 
+        ?
+        <Button variant="outlined" color="primary" onClick={handleClickOpenCreatePost}>
+          Create Post
+        </Button>
+        :
+        null
+      }
+      
+      <CreatePost/>
     </>
     )
   }
