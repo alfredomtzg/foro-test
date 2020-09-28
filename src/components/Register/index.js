@@ -26,6 +26,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+function CustomizedSnackbars(props) {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  useEffect(()=>{
+
+    console.log('Se cargo use Efecct de customized');
+
+
+
+
+  },[]);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  return (
+    <div className={classes.root}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          This is a success message!
+        </Alert>
+      </Snackbar>
+    </div>
+  );
+}
 
 
 
@@ -42,7 +80,7 @@ export default function Form() {
 
   return (
     <div className={classes.rootp}>
-      
+
       <form
         className={classes.root}
         onSubmit={handleSubmit}
@@ -93,12 +131,11 @@ export default function Form() {
           value={values.password}
           onChange={handleChange}
         />
-        <Button fullWidth variant="contained" color="secondary" type="submit" >
-          Sign Up
+        <Button variant="contained" color="secondary" type="submit" onClick={handleClick}>
+          Send
         </Button>
       </form>
 
     </div>
   );
 }
-
