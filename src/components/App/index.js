@@ -20,10 +20,10 @@ export default function App() {
   <BrowserRouter>
     <Layout>
         <Switch>
-          <Route exact path="foro-test/" component={Home}/>
-          <Route exact path="foro-test/login" component={Loading}/>
-          <Route exact path="foro-test/posts" component={Post}/>
-          <Route exact path="foro-test/posts/:_id" component={PostDetails}/>
+          <Route exact path="/" component={Home}/>
+          <Route exact path="/login" component={Loading}/>
+          <Route exact path="/posts" component={Post}/>
+          <Route exact path="/posts/:_id" component={PostDetails}/>
           <Route component={NotFound} />
         </Switch>
     </Layout>
