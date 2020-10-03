@@ -10,6 +10,8 @@ import { useStyles } from '../../Style/'
 import { Context } from '../../utils/Contex';
 // import Axios
 import axios from 'axios';
+// Route
+import {urlBase} from '../../utils/Route'
 
 
 export default function EditPost(props) {
@@ -34,7 +36,7 @@ export default function EditPost(props) {
   }, []);
 
   // select post by Id
-  const urlPostEdit = `https://testing-api-foro.herokuapp.com/api/posts/${props.match.params.post_id}`
+  const urlPostEdit = `${urlBase}/posts/${props.match.params.post_id}`
 const bringPostEdit = async () => {
   await axios.get(urlPostEdit)
     .then(res => {
@@ -54,11 +56,13 @@ const updatePost = async () => {
     })
     .then(res => {
       console.log(res)
+      
       setPostEdit({
         title:"",
         content:""})
+        props.history.push('/posts')
     })
-    props.history.push('/post')
+    
     .catch (error => {
     console.error(`Algo pasó en createNewPost: ${error}`)
     handleOpenEditPost()

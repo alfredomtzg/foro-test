@@ -1,7 +1,13 @@
+
 import { makeStyles } from '@material-ui/core/styles'
+
 export const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  action:{
+    padding: theme.spacing(1),
+    paddingTop: theme.spacing(1),
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -32,5 +38,15 @@ export const useStyles = makeStyles((theme) => ({
     '& > *': {
       marginTop: theme.spacing(1),
     },
+  },
+  form: {
+    '& > *': {
+      margin: theme.spacing(1),
+    }
+  },
+  admin: {
+    '& > *': {
+      marginTop: theme.spacing(1),
+    }
   },
 }));

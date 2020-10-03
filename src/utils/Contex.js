@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 // import Axios
 import axios from 'axios';
+import {urlSignUp} from '../utils/Route'
 //create functional component for context provider and export it
 export const Context = React.createContext();
 
@@ -69,7 +70,6 @@ export const ContextProvider = ({ children }) => {
     setValues({ ...values, [event.target.name]: event.target.value })
   }
   // send data whit Axios Post
-  const urlSignUp = "https://testing-api-foro.herokuapp.com/api/auth/signup"
 
   const [user, setUser] = useState(undefined)
   const createUserWhitFormSignUP = async () => {
@@ -146,6 +146,16 @@ const [openEditPost, setOpenEditPost] = useState(false);
       setOpenEditPost(false);
     };
 
+  // RemovePost
+const [openRemovePost, setOpenRemovePost] = useState(false);
+// Open or Close RemovePost
+const handleClickOpenRemovePost = () => {
+  setOpenRemovePost(true);
+};
+const handleCloseRemovePost = () => {
+  setOpenRemovePost(false);
+};
+
   // return Value
   return (
     <Context.Provider value={{
@@ -185,7 +195,11 @@ const [openEditPost, setOpenEditPost] = useState(false);
       openEditPost, 
       setOpenEditPost,
       handleClickOpenEditPost,
-      handleCloseEditPost
+      handleCloseEditPost,
+      openRemovePost, 
+      setOpenRemovePost,
+      handleClickOpenRemovePost,
+      handleCloseRemovePost
     }}>
       {children}
     </Context.Provider>
